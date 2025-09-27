@@ -1,34 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Theme switcher styles removed -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Coordinators — Techno KreatiCon 3.0</title>
   <meta name="description" content="Meet our coordinators for Techno KreatiCon 3.0 and get in touch." />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ===================== Tokens ===================== */
+    :root{
+      --font-heading: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      --brand: #3b82ff;
+      --brand-700: #2f67d6;
+
+      --bg: #0a0a0a;
+      --surface: #101010;
+      --surface-2:#121212;
+
+      --text:#f5f5f5;
+      --muted:#b3b3b3;
+      --line: rgba(255,255,255,0.10);
+      --border: rgba(255,255,255,0.12);
+
+      --radius: 14px;
+      --radius-lg: 22px;
+
+      --shadow: 0 12px 36px rgba(2, 6, 23, 0.24);
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.28);
+      --shadow-sm: 0 8px 22px rgba(0,0,0,0.2);
+    }
+
+    /* ===================== Global + No horizontal scroll ===================== */
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+
+    html, body{
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip; /* modern browsers */
+    }
+    @supports not (overflow-x: clip){
+      html, body{ overflow-x: hidden; }
+    }
+
+    body{
+      margin:0;
+      font-family: var(--font-body);
+      color: var(--text);
+      line-height: 1.6;
+      background:
+        linear-gradient(120deg, #0a1433 0%, #1e2246 60%, #232a4d 100%),
+        radial-gradient(ellipse 60% 40% at 70% 20%, rgba(0,255,255,0.12) 0%, transparent 80%),
+        radial-gradient(ellipse 40% 20% at 20% 80%, rgba(139,92,246,0.10) 0%, transparent 80%),
+        repeating-linear-gradient(135deg, rgba(0,255,255,0.04) 0px, rgba(139,92,246,0.04) 2px, transparent 2px, transparent 12px);
+      touch-action: pan-y;          /* vertical only on touch */
+      overscroll-behavior-x: none;  /* no side-pan bounce */
+    }
+
+    /* Media should never overflow the viewport */
+    img, video, svg, canvas, iframe{
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Long text safety on tiny screens */
+    :where(h1,h2,h3,h4,h5,h6,p,li,a){
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .container{ width: min(1200px, 92vw); margin: 0 auto; max-width: 100%; overflow-x: clip; }
+
+    /* ===================== Topbar ===================== */
+    .page-topbar{
+      position: sticky; top:0; z-index:1000;
+      background: rgba(10,10,10,.85);
+      backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-wrap{
+      display: grid; align-items: center; gap: 12px;
+      grid-template-columns: 1fr auto;
+      padding: 12px 0;
+    }
+    .brand-inline .cyberzen{
+      font-family: var(--font-heading);
+      font-weight: 800; letter-spacing: .04em;
+      color:#a7c0ff; user-select: none;
+    }
+
+    /* Enroll pill (animated) */
+    .pill-enroll{
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; font-weight:700;
+      padding: 7px 18px; border-radius: 999px;
+      background: var(--brand); color:#fff;
+      border: 1px solid rgba(255,255,255,.15);
+      position: relative; overflow: visible;
+      box-shadow: 0 4px 14px #3b82ff33;
+      transition: box-shadow .2s ease, transform .2s ease;
+      font-size: 15px;
+    }
+    .pill-enroll:hover{ box-shadow: 0 0 24px 8px #3b82ff; transform: translateY(-1px); }
+    .enroll-glow{
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 120%; height: 120%; border-radius: 999px; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle, #3b82ff 0%, rgba(59,130,255,0.45) 50%, rgba(59,130,255,0.18) 80%, transparent 100%);
+      animation: enrollGlow 2.2s infinite;
+    }
+    .enroll-icon{ display:inline-block; margin-right: 6px; vertical-align: middle; position: relative; z-index: 1; animation: enrollIconMove 1.2s infinite; }
+    .pill-enroll .arrow{ position: relative; z-index: 1; font-size: 15px; }
+
+    @keyframes enrollGlow { 0%{opacity:.7} 50%{opacity:1} 100%{opacity:.7} }
+    @keyframes enrollIconMove { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+
+    /* ===================== Sections / Titles ===================== */
+    .section-hero-dark{ padding: 32px 0 10px; }
+    .mega{
+      font-family: var(--font-heading); font-weight: 800;
+      font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.02em; margin: 0 0 10px;
+      text-shadow: 0 6px 24px rgba(0,0,0,.35);
+    }
+
+    .section-dark{ padding: 28px 0 40px; }
+    .section-dark.tight{ padding: 14px 0 40px; }
+
+    /* ===================== Coordinators grid ===================== */
+    .coord-grid{
+      display: grid; gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .coord-card{
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      padding-bottom: 10px;
+      transform: translateZ(0);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      opacity: 0; transform: translateY(14px); /* for reveal */
+    }
+    .coord-card.in-view{ opacity: 1; transform: translateY(0); }
+
+    .coord-card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .coord-card .photo{
+      aspect-ratio: 4 / 3; overflow: hidden; background: #0d0d0d;
+    }
+    .coord-card .photo img{
+      width:100%; height:100%; object-fit: cover;
+      filter: grayscale(100%) contrast(1.05);
+      transform: scale(1.02);
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .coord-card:hover .photo img{
+      transform: scale(1.04);
+      filter: grayscale(0%) contrast(1.02) brightness(1.06);
+    }
+
+    .coord-card .names{
+      padding: 14px 16px 2px; font-weight: 800; font-family: var(--font-heading);
+      font-size: clamp(16px, 2vw, 20px);
+    }
+    .coord-card .role{
+      padding: 0 16px 12px; color: var(--muted); font-size: 14px;
+    }
+
+    /* ===================== Contact block ===================== */
+    .contact-block{ display:grid; gap: 18px; }
+    .contact-card{
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .contact-card h3{
+      margin:0 0 6px; font-family: var(--font-heading); font-weight: 800;
+    }
+    .contact-card .lead{ color: var(--muted); margin: 0 0 12px; }
+    .contact-card .label{ color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+    .contact-list{
+      display:grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .contact-card a{ color:#fff; text-decoration: none; }
+    .contact-card a:hover{ text-decoration: underline; }
+
+    /* ===================== Footer ===================== */
+    .footer-dark{
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 22px 0;
+    }
+
+    /* ===================== Mobile tweaks ===================== */
+    @media (max-width: 700px){
+      .container{ width: 98vw; padding: 0 4vw; }
+      .topbar-wrap{ grid-template-columns: 1fr auto; gap: 8px; }
+      .section-dark{ padding: 22px 0 30px; }
+      .coord-grid{ gap: 18px; }
+    }
+  </style>
 </head>
-<body class="contact-dark theme-gradient">
-  <!-- Theme switcher removed -->
-  <!-- Page Topbar -->
+<body>
+  <!-- Topbar -->
   <div class="page-topbar">
     <div class="container topbar-wrap">
       <div class="brand-inline">
         <span class="cyberzen">CYBERZEN</span>
       </div>
-      <a class="pill-enroll enroll-animated" data-enroll href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener" style="background:#3b82ff;color:#fff;position:relative;overflow:visible;">
-        <span class="enroll-glow"></span>
-        <span class="enroll-icon">
-          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+
+      <a class="pill-enroll" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener" aria-label="Enroll">
+        <span class="enroll-glow" aria-hidden="true"></span>
+        <span class="enroll-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="11" cy="11" r="10" stroke="#fff" stroke-width="2" fill="#3b82ff"/>
             <path d="M11 7v5l3 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <span style="position:relative;z-index:2;">Enroll</span>
-        <span class="arrow" style="color:#fff;z-index:2;font-size:15px;">↗</span>
+        <span>Enroll</span>
+        <span class="arrow">↗</span>
       </a>
     </div>
   </div>
@@ -50,33 +254,39 @@
             <div class="names">Mr. Vishnu Varadhan<br>Mr. Harish</div>
             <div class="role">Head coordinators</div>
           </article>
+
           <article class="coord-card">
             <figure class="photo"><img src="assets/team/event-1.jpg" alt="Ms. Nithiya Shree G & Mr. Mohammed Jubair A — Event coordinators & Hospitality"></figure>
             <div class="names">Ms. Nithiya Shree G<br>Mr. Mohammed Jubair A</div>
-            <div class="role">Event coordinators & Hospitality</div>
+            <div class="role">Event coordinators &amp; Hospitality</div>
           </article>
+
           <article class="coord-card">
             <figure class="photo"><img src="assets/team/tech-1.jpg" alt="Mr. Sanjay S & Mr. Praveen Kumar G — Technical coordinators"></figure>
             <div class="names">Mr. Sanjay S<br>Mr. Praveen Kumar G</div>
             <div class="role">Technical coordinators</div>
           </article>
+
           <article class="coord-card">
             <figure class="photo"><img src="assets/team/design-1.jpg" alt="Ms. Dhanu Shree VG & Ms. Anu Praba S & Mr. Nitheesh — Designing Lead"></figure>
             <div class="names">Ms. Dhanu Shree VG<br>Ms. Anu Praba S<br>Mr. Nitheesh</div>
             <div class="role">Designing Lead</div>
           </article>
+
           <article class="coord-card">
             <figure class="photo"><img src="assets/team/marketing-1.jpg" alt="Mr. Vivek S & Mr. Nandhan S S — Digital Marketing Lead"></figure>
             <div class="names">Mr. Vivek S<br>Mr. Nandhan S S</div>
             <div class="role">Digital Marketing Lead</div>
           </article>
+
           <article class="coord-card">
             <figure class="photo"><img src="assets/team/treasurer-1.jpg" alt="Ms. Tharshni Shre AS & Mr. Semmozhyan — Treasurer"></figure>
             <div class="names">Ms. Tharshni Shre AS<br>Mr. Semmozhyan</div>
             <div class="role">Treasurer</div>
           </article>
+
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/web-lead.jpg" alt="Jonathan Reyes — Technical Lead – Web Platforms"></figure>
+            <figure class="photo"><img src="assets/team/web-lead.jpg" alt="Jonathan Reyes — Technical Lead — Web Platforms"></figure>
             <div class="names">Jonathan Reyes</div>
             <div class="role">Technical Lead — Web Platforms</div>
           </article>
@@ -93,14 +303,11 @@
           <div class="contact-list">
             <div>
               <div class="label">Email Us</div>
-              <a data-email>technokreaticon.tech@gmail.com</a>
-              <div style="margin-top:10px;">
-                <!-- Enroll button removed as requested -->
-              </div>
+              <a href="mailto:technokreaticon.tech@gmail.com">technokreaticon.tech@gmail.com</a>
             </div>
             <div>
               <div class="label">Call Us</div>
-              <a data-phone>+91 9730627087</a>
+              <a href="tel:+919730627087">+91 9730627087</a>
             </div>
           </div>
         </div>
@@ -108,116 +315,32 @@
     </section>
   </main>
 
-  <style>
-    .enroll-animated {
-      position: relative;
-      overflow: visible;
-      box-shadow: 0 0 0 0 #3b82ff;
-      animation: enrollPulse 1.8s infinite;
-      transition: box-shadow .2s;
-      font-size: 15px !important;
-      padding: 7px 18px !important;
-      min-width: 90px !important;
-      border-radius: 999px !important;
-      box-shadow: 0 4px 14px #3b82ff33 !important;
-      background: #3b82ff !important;
-      color: #fff !important;
-    }
-    .enroll-animated:hover {
-      box-shadow: 0 0 24px 8px #3b82ff;
-    }
-    .enroll-glow {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 120%; height: 120%;
-      border-radius: 999px;
-      background: radial-gradient(circle, #3b82ff 0%, rgba(59,130,255,0.45) 50%, rgba(59,130,255,0.18) 80%, transparent 100%);
-      z-index: 0;
-      pointer-events: none;
-      animation: enrollGlow 2.2s infinite;
-    }
-    @keyframes enrollPulse {
-      0% { box-shadow: 0 0 0 0 #3b82ff; }
-      70% { box-shadow: 0 0 24px 8px #3b82ff; }
-      100% { box-shadow: 0 0 0 0 #3b82ff; }
-    }
-    @keyframes enrollGlow {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
-    }
-    .enroll-icon {
-      display: inline-block;
-      margin-right: 7px;
-      vertical-align: middle;
-      position: relative;
-      z-index: 1;
-      animation: enrollIconMove 1.2s infinite;
-    }
-    @keyframes enrollIconMove {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-    /* Enroll button animation styles applied to topbar button */
-    .pill-enroll.enroll-animated {
-      position: relative;
-      overflow: visible;
-      background: #3b82ff !important;
-      color: #fff !important;
-      box-shadow: 0 0 0 0 #3b82ff;
-      animation: enrollPulse 1.8s infinite;
-      transition: box-shadow .2s;
-      font-size: 15px !important;
-      padding: 7px 18px !important;
-      min-width: 90px !important;
-      border-radius: 999px !important;
-      box-shadow: 0 4px 14px #3b82ff33 !important;
-    }
-    .pill-enroll.enroll-animated:hover {
-      box-shadow: 0 0 24px 8px #3b82ff;
-    }
-    .pill-enroll.enroll-animated .enroll-glow {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 120%; height: 120%;
-      border-radius: 999px;
-      background: radial-gradient(circle, #3b82ff 0%, rgba(59,130,255,0.45) 50%, rgba(59,130,255,0.18) 80%, transparent 100%);
-      z-index: 0;
-      pointer-events: none;
-      animation: enrollGlow 2.2s infinite;
-    }
-    @keyframes enrollPulse {
-      0% { box-shadow: 0 0 0 0 #3b82ff; }
-      70% { box-shadow: 0 0 24px 8px #3b82ff; }
-      100% { box-shadow: 0 0 0 0 #3b82ff; }
-    }
-    @keyframes enrollGlow {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
-    }
-    .pill-enroll.enroll-animated .enroll-icon {
-      display: inline-block;
-      margin-right: 7px;
-      vertical-align: middle;
-      position: relative;
-      z-index: 1;
-      animation: enrollIconMove 1.2s infinite;
-    }
-    @keyframes enrollIconMove {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-  </style>
   <footer class="footer-dark">
     <div class="container">
       <p>© 2025 Techno KreatiCon 3.0 • Organized by CyberZen, PPGIT</p>
       <p style="font-size:14px;color:#b3b3b3;margin-top:2px;">designed by NITHEESH. S</p>
     </div>
   </footer>
-  <script src="script.js"></script>
-  <!-- Theme switcher script removed; fixed gradient background applied. -->
+
+  <script>
+    // Reveal on scroll for coordinator cards (accessible/performant)
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const cards = document.querySelectorAll('.coord-card');
+
+    if (reduceMotion) {
+      cards.forEach(c => c.classList.add('in-view'));
+    } else if (cards.length) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      cards.forEach(c => io.observe(c));
+    }
+  </script>
 </body>
 </html>
