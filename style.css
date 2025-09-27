@@ -1,3 +1,151 @@
+/* ====== Mobile Responsive Improvements ====== */
+@media (max-width: 700px) {
+  .container {
+    width: 98vw;
+    padding: 0 4vw;
+  }
+  .topbar {
+    padding: 10px 0;
+  }
+  .topbar-wrap {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  .brand-wrap img {
+    height: 16px;
+  }
+  .nav-chips {
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 15px;
+  }
+  .enroll-pill {
+    padding: 8px 12px;
+    font-size: 15px;
+  }
+  .hero {
+    padding: 32px 0 12px;
+  }
+  .center-logo {
+    margin-bottom: 4px;
+  }
+  .tk-logo.hero-logo {
+    height: 54px;
+    max-width: 180px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    margin: 8px 0 4px;
+  }
+  .hero-eyebrow {
+    font-size: 15px;
+    margin-bottom: 1px;
+  }
+  .cta {
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .section {
+    padding: 32px 0;
+  }
+  .section-title {
+    font-size: 20px;
+    gap: 6px;
+  }
+  .about-grid {
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  .about-card, .about-card-wide {
+    max-width: 98vw;
+    padding: 12px;
+    font-size: 15px;
+  }
+  .promo-video {
+    max-width: 98vw;
+    height: auto;
+  }
+  .faculty-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
+  .faculty-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 8px;
+  }
+  .faculty-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 18px;
+  }
+  .faculty-img {
+    border-radius: 12px;
+  }
+  .faculty-name {
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+  .faculty-role {
+    font-size: 13px;
+  }
+  .agenda-card {
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 16px;
+  }
+  .badge {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  .stage {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .guidelines-grid {
+    margin-top: 10px;
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+  .boxed {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+  .guidelines-title {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .faq {
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
+  .faq-item summary {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+  .faq-item .answer {
+    padding: 0 12px 10px;
+    font-size: 14px;
+  }
+  footer {
+    padding: 12px 0;
+    font-size: 13px;
+  }
+  .footer-flex {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  .footer-credit {
+    font-size: 12px;
+    margin-top: 1px;
+  }
+}
 /* ====== Fonts & Base ====== */
 :root{
   --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -84,6 +232,7 @@ a:hover{ opacity: .9; }
 .navbar{
   position: sticky; top: 0; z-index: 999;
   background: rgba(15, 21, 43, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
@@ -177,9 +326,11 @@ a:hover{ opacity: .9; }
 .schedule .dot{ width:12px; height:12px; border-radius:50%; background: var(--accent); margin-top:6px; box-shadow:0 0 0 4px color-mix(in srgb, var(--accent), transparent 80%); }
 
 /* Footer */
+/* Footer */
 .footer{ background: color-mix(in oklab, var(--surface), black 10%); color: #cbd5e1; padding: 28px 0; }
 .footer a{ color: #cbd5e1; }
-.foot-wrap{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+.footer-flex { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.footer-credit { font-size:14px; color:#b3b3b3; margin-top:2px; }
 
 /* ====== Reveal Animations ====== */
 .reveal{ opacity:0; transform: translateY(18px); transition: all .6s ease; }
@@ -290,7 +441,9 @@ body.contact-dark{
 }
 .contact-dark .brand-inline .cyberzen{
   font-family: 'Manrope', system-ui; font-weight: 800; letter-spacing: .04em;
-  color:#a7c0ff; user-select:none;
+  color:#a7c0ff;
+  -webkit-user-select:none;
+  user-select:none;
 }
 .contact-dark .pill-enroll{
   display:inline-flex; align-items:center; gap:8px;
