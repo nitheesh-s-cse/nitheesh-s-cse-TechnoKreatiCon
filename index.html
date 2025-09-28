@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Techno KreatiCon 3.0 — PPG Institute of Technology, Coimbatore</title>
-  <meta name="description" content="Techno KreatiCon 3.0 by CyberZen @ PPGIT. Rulebook & Guidelines, Agenda, Venue, FAQ, Contact. Register now!" />
+  <meta name="description" content="Techno KreatiCon 3.0 by  @ PPGIT. Rulebook & Guidelines, Agenda, Venue, FAQ, Contact. Register now!" />
   <meta name="theme-color" content="#0b0f2a" />
 
   <!-- Canonical + Social -->
@@ -203,7 +203,7 @@
       font-size: clamp(36px, 7vw, 68px);
       letter-spacing:-.02em;
     }
-    .cta{ margin-top: 14px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .cta{ margin-top: 14px; display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
     .btn{
       display:inline-flex; align-items:center; gap:8px; padding:12px 18px;
       border-radius: 14px; background: rgba(255,255,255,.06); color:#fff; text-decoration:none;
@@ -212,6 +212,19 @@
     .btn-primary{ background: var(--brand); border-color: var(--brand); color:#fff; }
     .btn-primary:hover{ background: var(--brand-700); }
     .btn-ghost{ background: rgba(255,255,255,.08); }
+    /* Add margin-top to Broucher button only when stacked below another button in .cta */
+    .cta .btn-ghost {
+      margin-top: 8px;
+    }
+
+    /* Ensure .cta-row always breaks to a new centered row under the primary button */
+    .cta .cta-row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+      flex-basis: 100%;
+    }
 
     /* ================= Sections / Cards ================= */
     .section{ padding: 56px 0; }
@@ -236,7 +249,9 @@
     .stage{ display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
     .badge{ padding:10px 16px; border-radius:999px; background:#1a2040; border:1px solid var(--line); }
     .badge.blue{ background: var(--brand); color:#fff; border-color: var(--brand); }
-    .agenda-card{ border-radius: var(--radius-lg); padding:18px; background: rgba(255,255,255,.04); border:1px solid var(--line); box-shadow: var(--shadow-soft); }
+  .agenda-card{ border-radius: var(--radius-lg); padding:18px; background: rgba(255,255,255,.04); border:1px solid var(--line); box-shadow: var(--shadow-soft); }
+  /* small gap between agenda items to avoid overlap on narrow screens */
+  .agenda-card + .agenda-card { margin-top: 12px; }
 
     /* ================= Faculty ================= */
     .section.faculty{
@@ -528,7 +543,14 @@
       <div class="reveal hero-organises">organises</div>
       <h1 class="reveal">Techno KreatiCon 3.0</h1>
       <div class="cta reveal">
-        <a class="btn btn-primary btn-animated" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><i class="ri-rocket-2-line"></i> Register now</a>
+  <a class="btn btn-primary btn-animated" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener">
+    <i class="ri-rocket-2-line"></i> Register now
+  </a>
+
+  <!-- Always sits below the Register button -->
+  <div class="cta-row">
+    <a class="btn btn-ghost" href="assets/team/broucher.png" target="_blank" rel="noopener"><i class="ri-file-image-line"></i> Broucher</a>
+  </div>
       </div>
         <div class="hero-logo-row">
           
@@ -924,6 +946,84 @@
     }
     window.addEventListener('hashchange', updateAriaCurrent);
     window.addEventListener('load', updateAriaCurrent);
+    // Brochure modal — improved accessibility (aria-hidden toggle + focus trap)
+    const brochureBtn = document.getElementById('brochureBtn');
+    const brochureModal = document.getElementById('brochureModal');
+    const brochureCloseBtn = brochureModal?.querySelector('.brochure-close');
+    let lastFocusEl;
+
+    // Return focusable elements inside a container
+    function getFocusable(container){
+      if (!container) return [];
+      const selectors = 'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]';
+      return Array.from(container.querySelectorAll(selectors)).filter(el => el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    }
+
+    function openBrochure(){
+      if (!brochureModal) return;
+      lastFocusEl = document.activeElement;
+      brochureModal.classList.add('open');
+      brochureModal.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
+
+      // move focus to first focusable element (close button preferred)
+      const focusables = getFocusable(brochureModal);
+      (focusables[0] || brochureCloseBtn)?.focus();
+    }
+
+    function closeBrochure(){
+      if (!brochureModal) return;
+      brochureModal.classList.remove('open');
+      brochureModal.setAttribute('aria-hidden','true');
+      document.body.classList.remove('modal-open');
+      lastFocusEl?.focus();
+    }
+
+    if (brochureBtn) brochureBtn.addEventListener('click', openBrochure);
+    if (brochureCloseBtn) brochureCloseBtn.addEventListener('click', closeBrochure);
+
+    // Close when clicking the overlay (outside the card)
+    brochureModal?.addEventListener('click', (e) => {
+      if (e.target === brochureModal) closeBrochure();
+    });
+
+    // Keyboard handling: Escape to close + Tab focus trap while open
+    document.addEventListener('keydown', (e) => {
+      if (!brochureModal) return;
+      const isOpen = brochureModal.classList.contains('open');
+      if (e.key === 'Escape' && isOpen) {
+        e.preventDefault();
+        closeBrochure();
+        return;
+      }
+
+      if (e.key === 'Tab' && isOpen) {
+        const focusables = getFocusable(brochureModal);
+        if (focusables.length === 0) {
+          // nothing to trap
+          e.preventDefault();
+          return;
+        }
+        const currentIndex = focusables.indexOf(document.activeElement);
+        if (e.shiftKey) {
+          // Shift + Tab
+          if (currentIndex === 0 || document.activeElement === brochureModal) {
+            focusables[focusables.length - 1].focus();
+            e.preventDefault();
+          }
+        } else {
+          // Tab
+          if (currentIndex === focusables.length - 1) {
+            focusables[0].focus();
+            e.preventDefault();
+          }
+        }
+      }
+    });
   </script>
+  <!-- Fullscreen brochure viewer -->
+  <div id="brochureModal" class="brochure-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Event brochure">
+    <!-- Brochure card removed by user request; modal container kept for future use -->
+  </div>
 </body>
 </html>
