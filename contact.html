@@ -1,5 +1,6 @@
+  
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -12,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ===================== Tokens ===================== */
+    /* ============== Design Tokens ============== */
     :root{
       --font-heading: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -20,13 +21,15 @@
       --brand: #3b82ff;
       --brand-700: #2f67d6;
 
-      --bg: #0a0a0a;
-      --surface: #101010;
-      --surface-2:#121212;
+      --bg: #0b1020;
+      --bg-2: #0f152b;
+      --surface: #101729;
+      --surface-2:#0f172a;
 
-      --text:#f5f5f5;
-      --muted:#b3b3b3;
-      --line: rgba(255,255,255,0.10);
+      --text:#e8eeff;
+      --muted:#aab7d5;
+
+      --line: rgba(255,255,255,0.08);
       --border: rgba(255,255,255,0.12);
 
       --radius: 14px;
@@ -37,18 +40,17 @@
       --shadow-sm: 0 8px 22px rgba(0,0,0,0.2);
     }
 
-    /* ===================== Global + No horizontal scroll ===================== */
+    /* ============== Base / Global ============== */
     *{ box-sizing: border-box; }
     html{ scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
 
     html, body{
       width: 100%;
       max-width: 100%;
-      overflow-x: clip; /* modern browsers */
+      overflow-x: clip;
     }
-    @supports not (overflow-x: clip){
-      html, body{ overflow-x: hidden; }
-    }
+    @supports not (overflow-x: clip){ html, body{ overflow-x: hidden; } }
 
     body{
       margin:0;
@@ -56,133 +58,164 @@
       color: var(--text);
       line-height: 1.6;
       background:
-        linear-gradient(120deg, #0a1433 0%, #1e2246 60%, #232a4d 100%),
-        radial-gradient(ellipse 60% 40% at 70% 20%, rgba(0,255,255,0.12) 0%, transparent 80%),
-        radial-gradient(ellipse 40% 20% at 20% 80%, rgba(139,92,246,0.10) 0%, transparent 80%),
-        repeating-linear-gradient(135deg, rgba(0,255,255,0.04) 0px, rgba(139,92,246,0.04) 2px, transparent 2px, transparent 12px);
-      touch-action: pan-y;          /* vertical only on touch */
-      overscroll-behavior-x: none;  /* no side-pan bounce */
+        radial-gradient(1200px 680px at -10% -20%, rgba(59,130,255,.18), transparent 45%),
+        radial-gradient(900px 480px at 120% 0%, rgba(165,180,255,.14), transparent 50%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      touch-action: pan-y;
+      overscroll-behavior-x: none;
     }
 
-    /* Media should never overflow the viewport */
-    img, video, svg, canvas, iframe{
-      max-width: 100%;
-      height: auto;
-      display: block;
+    img, video, svg, canvas, iframe{ max-width: 100%; height: auto; display: block; }
+    :where(h1,h2,h3,h4,h5,h6,p,li,a){ overflow-wrap:anywhere; word-break: break-word; }
+
+    .container{ width:min(1200px,92vw); margin:0 auto; max-width:100%; }
+
+    /* Skip link */
+    .skip-link{
+      position: absolute; left:-9999px; top:0;
+      background:#fff; color:#000; padding:10px 14px; border-radius:8px;
     }
+    .skip-link:focus{ left:12px; top:12px; z-index: 3000; }
 
-    /* Long text safety on tiny screens */
-    :where(h1,h2,h3,h4,h5,h6,p,li,a){
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
-    .container{ width: min(1200px, 92vw); margin: 0 auto; max-width: 100%; overflow-x: clip; }
-
-    /* ===================== Topbar ===================== */
+    /* ============== Topbar ============== */
     .page-topbar{
       position: sticky; top:0; z-index:1000;
-      background: rgba(10,10,10,.85);
+      background: linear-gradient(180deg, rgba(7,10,20,.78), rgba(7,10,20,.62));
+      -webkit-backdrop-filter: saturate(160%) blur(10px);
       backdrop-filter: saturate(160%) blur(10px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--line);
+      padding: max(10px, env(safe-area-inset-top)) 0 10px;
     }
     .topbar-wrap{
       display: grid; align-items: center; gap: 12px;
       grid-template-columns: 1fr auto;
-      padding: 12px 0;
     }
     .brand-inline .cyberzen{
       font-family: var(--font-heading);
-      font-weight: 800; letter-spacing: .04em;
-      color:#a7c0ff; user-select: none;
-    }
-
-    /* Enroll pill (animated) */
-    .pill-enroll{
-      display:inline-flex; align-items:center; gap:8px;
-      text-decoration:none; font-weight:700;
-      padding: 7px 18px; border-radius: 999px;
-      background: var(--brand); color:#fff;
-      border: 1px solid rgba(255,255,255,.15);
-      position: relative; overflow: visible;
-      box-shadow: 0 4px 14px #3b82ff33;
-      transition: box-shadow .2s ease, transform .2s ease;
-      font-size: 15px;
-    }
-    .pill-enroll:hover{ box-shadow: 0 0 24px 8px #3b82ff; transform: translateY(-1px); }
-    .enroll-glow{
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      width: 120%; height: 120%; border-radius: 999px; pointer-events: none; z-index: 0;
-      background: radial-gradient(circle, #3b82ff 0%, rgba(59,130,255,0.45) 50%, rgba(59,130,255,0.18) 80%, transparent 100%);
-      animation: enrollGlow 2.2s infinite;
-    }
-    .enroll-icon{ display:inline-block; margin-right: 6px; vertical-align: middle; position: relative; z-index: 1; animation: enrollIconMove 1.2s infinite; }
-    .pill-enroll .arrow{ position: relative; z-index: 1; font-size: 15px; }
-
-    @keyframes enrollGlow { 0%{opacity:.7} 50%{opacity:1} 100%{opacity:.7} }
-    @keyframes enrollIconMove { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
-
-    /* ===================== Sections / Titles ===================== */
-    .section-hero-dark{ padding: 32px 0 10px; }
-    .mega{
-      font-family: var(--font-heading); font-weight: 800;
-      font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.02em; margin: 0 0 10px;
+      font-weight: 800; letter-spacing: .08em; color:#a7c0ff;
+      user-select: none;
       text-shadow: 0 6px 24px rgba(0,0,0,.35);
     }
 
-    .section-dark{ padding: 28px 0 40px; }
-    .section-dark.tight{ padding: 14px 0 40px; }
+    .pill-enroll{
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none; font-weight:700;
+      padding: 9px 18px; border-radius: 999px;
+      background: #fff; color:#0b1020;
+      border:2px solid var(--brand);
+      box-shadow: 0 8px 28px rgba(59,130,255,.35);
+      transition: transform .15s ease, box-shadow .2s ease;
+      position: relative;
+    }
+    .pill-enroll:hover{ transform: translateY(-1px); box-shadow: 0 14px 40px rgba(59,130,255,.45); }
+    .pill-dot{
+      width:10px; height:10px; border-radius:50%; background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(59,130,255,.18);
+    }
 
-    /* ===================== Coordinators grid ===================== */
+    /* ============== Hero / Title ============== */
+    .section-hero-dark{ padding: 32px 0 8px; border-bottom: 1px solid var(--line); }
+    .mega{
+      font-family: var(--font-heading); font-weight: 800;
+      font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.02em; margin: 0 0 6px;
+      text-shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+    .subtitle{ color: var(--muted); margin: 0 0 6px; }
+
+    /* ============== Sections ============== */
+    .section-dark{ padding: 28px 0 44px; }
+    .section-dark.tight{ padding: 22px 0 36px; }
+
+    /* ============== Coordinators Grid ============== */
     .coord-grid{
       display: grid; gap: 22px;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items: start;
     }
     .coord-card{
-      background: var(--surface-2);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      padding-bottom: 10px;
+  box-shadow: 0 0 7px 1px #3b82ff, 0 0 12px 2px rgba(59,130,255,0.12), var(--shadow-soft);
       transform: translateZ(0);
       transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      opacity: 0; transform: translateY(14px); /* for reveal */
+      opacity: 0; transform: translateY(14px);
+      animation: neonShimmerCard 2.8s infinite linear;
+    }
+
+    @keyframes neonShimmerCard {
+      0% {
+        box-shadow: 0 0 7px 1px #3b82ff, 0 0 12px 2px rgba(59,130,255,0.12), var(--shadow-soft);
+        filter: brightness(1.08);
+      }
+      30% {
+        box-shadow: 0 0 14px 3px #5ad1ff, 0 0 20px 5px rgba(90,209,255,0.18), var(--shadow-soft);
+        filter: brightness(1.18);
+      }
+      60% {
+        box-shadow: 0 0 10px 2px #3b82ff, 0 0 16px 3px rgba(59,130,255,0.15), var(--shadow-soft);
+        filter: brightness(1.12);
+      }
+      100% {
+        box-shadow: 0 0 7px 1px #3b82ff, 0 0 12px 2px rgba(59,130,255,0.12), var(--shadow-soft);
+        filter: brightness(1.08);
+      }
     }
     .coord-card.in-view{ opacity: 1; transform: translateY(0); }
-
     .coord-card:hover{
       transform: translateY(-4px);
       box-shadow: 0 24px 60px rgba(0,0,0,.45);
-      border-color: rgba(255,255,255,.16);
+      border-color: rgba(59,130,255,.28);
     }
 
+    /* Bigger image area + edge-to-edge */
     .coord-card .photo{
-      aspect-ratio: 4 / 3; overflow: hidden; background: #0d0d0d;
+      margin: 0;                 /* remove figure default margin */
+      width: 100%;
+      aspect-ratio: auto;        /* override any previous ratio */
+      height: clamp(360px, 42vw, 620px);  /* global tall photos */
+      overflow: hidden;
+      background: #0d1122;
+      position: relative;
     }
     .coord-card .photo img{
-      width:100%; height:100%; object-fit: cover;
-      filter: grayscale(100%) contrast(1.05);
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      filter: grayscale(14%) contrast(1.04);
       transform: scale(1.02);
       transition: transform .35s ease, filter .35s ease;
     }
     .coord-card:hover .photo img{
-      transform: scale(1.04);
-      filter: grayscale(0%) contrast(1.02) brightness(1.06);
+      transform: scale(1.05);
+      filter: grayscale(0%) contrast(1.03) brightness(1.06);
     }
 
-    .coord-card .names{
-      padding: 14px 16px 2px; font-weight: 800; font-family: var(--font-heading);
-      font-size: clamp(16px, 2vw, 20px);
-    }
-    .coord-card .role{
-      padding: 0 16px 12px; color: var(--muted); font-size: 14px;
+    /* Extra-tall image for Head coordinators */
+    .photo--lg{
+      height: clamp(440px, 50vw, 720px);
     }
 
-    /* ===================== Contact block ===================== */
+    .coord-meta{
+      padding: 14px 16px 16px;
+    }
+    .coord-name{
+      font-weight: 800; font-family: var(--font-heading);
+      font-size: clamp(17px, 2vw, 20px); margin: 0 0 8px;
+      letter-spacing: .1px; line-height: 1.35;
+    }
+    /* Stack names one per line */
+    .coord-name .person{ display:block; }
+
+    .coord-role{
+      color: var(--muted); font-size: 14px; margin: 0;
+    }
+
+    /* ============== Contact ============== */
     .contact-block{ display:grid; gap: 18px; }
     .contact-card{
-      background: var(--surface-2);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 18px;
@@ -196,52 +229,56 @@
     .contact-list{
       display:grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
-    .contact-card a{ color:#fff; text-decoration: none; }
-    .contact-card a:hover{ text-decoration: underline; }
+    .contact-card a{ color:#fff; text-decoration: none; border-bottom: 1px dashed transparent; }
+    .contact-card a:hover{ border-bottom-color: rgba(255,255,255,.45); }
 
-    /* ===================== Footer ===================== */
+    /* ============== Footer ============== */
     .footer-dark{
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--line);
       color: var(--muted);
       padding: 22px 0;
     }
+    .footer-credit{ font-size: 14px; color:#b3b3b3; margin-top: 2px; }
 
-    /* ===================== Mobile tweaks ===================== */
+    /* ============== Mobile tweaks ============== */
     @media (max-width: 700px){
       .container{ width: 98vw; padding: 0 4vw; }
       .topbar-wrap{ grid-template-columns: 1fr auto; gap: 8px; }
-      .section-dark{ padding: 22px 0 30px; }
+      .section-dark{ padding: 24px 0 36px; }
       .coord-grid{ gap: 18px; }
+
+      .coord-card .photo{
+        height: clamp(300px, 64vw, 480px);
+      }
+      .photo--lg{
+        height: clamp(360px, 72vw, 520px);
+      }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <!-- Topbar -->
   <div class="page-topbar">
     <div class="container topbar-wrap">
-      <div class="brand-inline">
-        <span class="cyberzen">CYBERZEN</span>
+      <div class="brand-inline" aria-label="CyberZen">
+  <img src="assets/team/cyberzen.svg" alt="CYBERZEN Logo" class="tk-logo" fetchpriority="high" decoding="async" style="margin-left:-24px;" />
       </div>
 
       <a class="pill-enroll" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener" aria-label="Enroll">
-        <span class="enroll-glow" aria-hidden="true"></span>
-        <span class="enroll-icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="10" stroke="#fff" stroke-width="2" fill="#3b82ff"/>
-            <path d="M11 7v5l3 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span>Enroll</span>
-        <span class="arrow">↗</span>
+  <span class="pill-dot" aria-hidden="true"></span>
+  Register now <span aria-hidden="true">↗</span>
       </a>
     </div>
   </div>
 
-  <main>
+  <main id="main">
     <!-- Title -->
     <section class="section-hero-dark">
       <div class="container">
         <h1 class="mega">Meet Our Coordinators</h1>
+        <p class="subtitle">The team behind Techno KreatiCon 3.0</p>
       </div>
     </section>
 
@@ -250,45 +287,94 @@
       <div class="container">
         <div class="coord-grid">
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/head-1.jpg" alt="Mr. Vishnu Varadhan & Mr. Harish — Head coordinators"></figure>
-            <div class="names">Mr. Vishnu Varadhan<br>Mr. Harish</div>
-            <div class="role">Head coordinators</div>
+            <figure class="photo photo--lg">
+              <img src="assets/team/head-1.jpg" alt="Mr. Vishnu Varadhan and Mr. Harish — Head coordinators" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Mr. Vishnu Varadhan</span>
+                <span class="person">Mr. Harish</span>
+              </h2>
+              <p class="coord-role">Head coordinators</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/event-1.jpg" alt="Ms. Nithiya Shree G & Mr. Mohammed Jubair A — Event coordinators & Hospitality"></figure>
-            <div class="names">Ms. Nithiya Shree G<br>Mr. Mohammed Jubair A</div>
-            <div class="role">Event coordinators &amp; Hospitality</div>
+            <figure class="photo">
+              <img src="assets/team/event-1.jpg" alt="Ms. Nithiya Shree G and Mr. Mohammed Jubair A — Event coordinators and Hospitality" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Ms. Nithiya Shree G</span>
+                <span class="person">Mr. Mohammed Jubair A</span>
+              </h2>
+              <p class="coord-role">Event coordinators &amp; Hospitality</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/tech-1.jpg" alt="Mr. Sanjay S & Mr. Praveen Kumar G — Technical coordinators"></figure>
-            <div class="names">Mr. Sanjay S<br>Mr. Praveen Kumar G</div>
-            <div class="role">Technical coordinators</div>
+            <figure class="photo">
+              <img src="assets/team/tech-1.jpg" alt="Mr. Sanjay S and Mr. Praveen Kumar G — Technical coordinators" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Mr. Sanjay S</span>
+                <span class="person">Mr. Praveen Kumar G</span>
+              </h2>
+              <p class="coord-role">Technical coordinators</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/design-1.jpg" alt="Ms. Dhanu Shree VG & Ms. Anu Praba S & Mr. Nitheesh — Designing Lead"></figure>
-            <div class="names">Ms. Dhanu Shree VG<br>Ms. Anu Praba S<br>Mr. Nitheesh</div>
-            <div class="role">Designing Lead</div>
+            <figure class="photo">
+              <img src="assets/team/design-1.jpg" alt="Ms. Dhanu Shree VG, Ms. Anu Praba S and Mr. Nitheesh — Designing Lead" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Mr. Nitheesh</span>
+                <span class="person">Ms. Anu Praba S</span>
+                <span class="person">Ms. Dhanu Shree VG</span>
+              </h2>
+              <p class="coord-role">Designing Lead</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/marketing-1.jpg" alt="Mr. Vivek S & Mr. Nandhan S S — Digital Marketing Lead"></figure>
-            <div class="names">Mr. Vivek S<br>Mr. Nandhan S S</div>
-            <div class="role">Digital Marketing Lead</div>
+            <figure class="photo">
+              <img src="assets/team/marketing-1.jpg" alt="Mr. Vivek S and Mr. Nandhan S S — Digital Marketing Lead" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Mr. Vivek S</span>
+                <span class="person">Mr. Nandhan S S</span>
+              </h2>
+              <p class="coord-role">Digital Marketing Lead</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/treasurer-1.jpg" alt="Ms. Tharshni Shre AS & Mr. Semmozhyan — Treasurer"></figure>
-            <div class="names">Ms. Tharshni Shre AS<br>Mr. Semmozhyan</div>
-            <div class="role">Treasurer</div>
+            <figure class="photo">
+              <img src="assets/team/treasurer-1.jpg" alt="Ms. Tharshni Shre AS and Mr. Semmozhyan — Treasurer" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Ms. Tharshni Shre AS</span>
+                <span class="person">Mr. Semmozhyan</span>
+              </h2>
+              <p class="coord-role">Treasurer</p>
+            </div>
           </article>
 
           <article class="coord-card">
-            <figure class="photo"><img src="assets/team/web-lead.jpg" alt="Jonathan Reyes — Technical Lead — Web Platforms"></figure>
-            <div class="names">Jonathan Reyes</div>
-            <div class="role">Technical Lead — Web Platforms</div>
+            <figure class="photo">
+              <img src="assets/team/web-lead.jpg" alt="Jonathan Reyes — Technical Lead, Web Platforms" loading="lazy" decoding="async" />
+            </figure>
+            <div class="coord-meta">
+              <h2 class="coord-name">
+                <span class="person">Jonathan Reyes</span>
+              </h2>
+              <p class="coord-role">Technical Lead — Web Platforms</p>
+            </div>
           </article>
         </div>
       </div>
@@ -307,7 +393,7 @@
             </div>
             <div>
               <div class="label">Call Us</div>
-              <a href="tel:+919730627087">+91 9730627087</a>
+              <a href="tel:+919730627087">+91 97306 27087</a>
             </div>
           </div>
         </div>
@@ -317,8 +403,8 @@
 
   <footer class="footer-dark">
     <div class="container">
-      <p>© 2025 Techno KreatiCon 3.0 • Organized by CyberZen, PPGIT</p>
-      <p style="font-size:14px;color:#b3b3b3;margin-top:2px;">designed by NITHEESH. S</p>
+      <p>© 2025 Techno KreatiCon 3.0 • Organised by CyberZen, PPGIT</p>
+      <p class="footer-credit">designed by NITHEESH. S</p>
     </div>
   </footer>
 
@@ -337,8 +423,7 @@
             obs.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12 });
-
+      }, { threshold: 0.14 });
       cards.forEach(c => io.observe(c));
     }
   </script>

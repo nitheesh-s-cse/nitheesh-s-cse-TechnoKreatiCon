@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en" class="no-js"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" /> <title>Rulebook & Guidelines — Techno KreatiCon 3.0</title> <meta name="description" content="Official Rulebook & Guidelines for Techno KreatiCon 3.0. Event structure, rules, code of conduct, track-specific instructions, and rewards." /> <meta name="theme-color" content="#0b0f2a" /> <!-- Fonts --> <link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/> <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/> <!-- Icons --> <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"> <style> /* ============== Tokens (match index) ============== */ :root{ --bg: #070a12; --bg2: #0b1020; --surface: #0f1426; --chip: rgba(255,255,255,.12); --line: rgba(255,255,255,.10); --text: #f2f5ff; --muted:#aab3cf; --brand:#3b82ff; --brand-700:#2f67d6; --radius-lg: 28px; --radius: 16px; --shadow: 0 20px 60px rgba(0,0,0,.45); --shadow-soft: 0 10px 30px rgba(0,0,0,.28); } *{ box-sizing: border-box; } html{ scroll-behavior:smooth; } @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } } :where(section, [id]){ scroll-margin-top: 84px; } @media (max-width: 700px){ :where(section, [id]){ scroll-margin-top: 64px; } } html, body{ width:100%; max-width:100%; overflow-x: clip; } @supports not (overflow-x: clip){ html, body{ overflow-x: hidden; } } body{ margin:0; color:var(--text); background: radial-gradient(1200px 680px at -10% -20%, rgba(59,130,255,.18), transparent 45%), radial-gradient(900px 480px at 120% 0%, rgba(165,180,255,.14), transparent 50%), linear-gradient(180deg, var(--bg), var(--bg2)); font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; line-height:1.65; touch-action: pan-y; overscroll-behavior-x: none; } .container{ width:min(1100px,92vw); margin:0 auto; } /* Topbar */ .topbar{ position: sticky; top:0; z-index:1000; padding: 12px 0; background: linear-gradient(180deg, rgba(7,10,18,.78), rgba(7,10,18,.6)); -webkit-backdrop-filter: saturate(160%) blur(10px); backdrop-filter: saturate(160%) blur(10px); border-bottom:1px solid var(--line); } .tb-wrap{ display:flex; align-items:center; justify-content:space-between; gap:12px; } .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-family:'Manrope',system-ui; letter-spacing:.06em; color:#a7c0ff; } .tb-actions{ display:flex; gap:10px; flex-wrap:wrap; } .pill{ display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; border:1px solid var(--line); background: var(--chip); color:#fff; text-decoration:none; box-shadow: var(--shadow-soft); } .pill.primary{ background:#fff; color:#0b0f1f; border:2px solid var(--brand); font-weight:700; } .pill:hover{ opacity:.95; } /* Hero */ .hero{ padding: 44px 0 18px; border-bottom:1px solid var(--line); text-align:center; } .hero h1{ margin:0 0 10px; font-family:'Manrope',system-ui; font-size: clamp(30px, 5.6vw, 48px); font-weight:800; letter-spacing:-.02em; } .hero p{ margin:0; color: var(--muted); } /* Subnav */ .subnav{ position: sticky; top: 64px; z-index: 900; background: rgba(11,16,32,.65); border-bottom: 1px solid var(--line); -webkit-backdrop-filter: saturate(160%) blur(10px); backdrop-filter: saturate(160%) blur(10px); } .subnav .nav-row{ display:flex; gap:10px; flex-wrap:wrap; padding:10px 0; align-items:center; } .subnav a{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid var(--line); background: rgba(255,255,255,.06); color:#fff; text-decoration:none; font-size:14px; } .subnav a:hover{ background: rgba(255,255,255,.1); } .subnav a[aria-current="true"]{ outline: 2px solid rgba(59,130,255,.45); } /* Sections */ .section{ padding: 36px 0; } .title{ margin: 0 0 12px; display:flex; align-items:center; gap:10px; font-family:'Manrope',system-ui; font-weight:800; font-size:24px; } .card{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-soft); } /* Timeline */ .timeline{ list-style:none; margin:0; padding-left:22px; position:relative; } .timeline::before{ content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background: var(--line); } .timeline li{ position:relative; padding:10px 0; color: var(--muted); } .timeline li::before{ content:''; position:absolute; left:-2px; top:16px; width:10px; height:10px; border-radius:50%; background: var(--brand); box-shadow: 0 0 0 3px rgba(59,130,255,.2); } .pill-day{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background: var(--brand); border:1px solid rgba(59,130,255,.5); border-radius:999px; padding:2px 10px; margin-right:8px; } /* Two-column grid */ .grid{ display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items:start; } .muted{ color: var(--muted); } .small{ font-size:14px; } .mt-10{ margin-top:10px; } .mt-14{ margin-top:14px; } .mt-18{ margin-top:18px; } /* Footer */ footer{ color: var(--muted); border-top:1px solid var(--line); padding: 22px 0; } /* Active section highlighter (subnav) */ .anchor{ position: relative; } .anchor:target .title{ text-decoration: underline 2px rgba(59,130,255,.55); text-underline-offset: 4px; } /* Smaller devices */ @media (max-width: 700px){ .container{ width:98vw; padding: 0 4vw; } .hero{ padding: 32px 0 12px; } .title{ font-size:20px; } } </style> <script>document.documentElement.classList.replace('no-js','js');</script></head> <body> <!-- Topbar --> <header class="topbar"> <div class="container tb-wrap"> <a class="brand" href="index.html" aria-label="Back to home"> <i class="ri-arrow-left-line" aria-hidden="true"></i> Back to Home </a> <div class="tb-actions"> <a class="pill" href="#overview"><i class="ri-book-2-line"></i> Overview</a> <a class="pill primary" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"> <span style="width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(59,130,255,.18)"></span> Register now <i class="ri-arrow-right-up-line" aria-hidden="true"></i> </a> </div> </div> </header> <!-- Hero --> <section class="hero"> <div class="container"> <h1>Rulebook & Guidelines</h1> <p>The complete guide for participants of Techno KreatiCon 3.0</p> </div> </section> <!-- Subnav --> <div class="subnav"> <div class="container nav-row"> <a href="#overview" aria-current="true"><i class="ri-information-line"></i> Overview</a> <a href="#event-structure"><i class="ri-timeline-view"></i> Event Structure</a> <a href="#rules"><i class="ri-list-check-2"></i> General Rules</a> <a href="#conduct"><i class="ri-shield-check-line"></i> Code of Conduct</a> <a href="#vibe"><i class="ri-code-s-slash-line"></i> Vibe Coding</a> <a href="#ideathon"><i class="ri-presentation-line"></i> Ideathon</a> <a href="#rewards"><i class="ri-trophy-line"></i> Rewards</a> <a href="#closing"><i class="ri-bookmark-3-line"></i> Closing Note</a> </div> </div> <main> <!-- Overview --> <section id="overview" class="section anchor"> <div class="container"> <h2 class="title"><i class="ri-information-fill"></i> About the Event</h2> <div class="card"> <p>Techno KreatiCon 3.0 is a three-day national-level competition scheduled on <strong>October 14, 16, and 17</strong>, organised by the Department of Computer Science and Engineering at <strong>PPG Institute of Technology</strong>.</p> <p class="mt-10">This flagship event integrates two parallel tracks:</p> <ul class="mt-10"> <li><strong>Vibe Coding:</strong> A test of technical knowledge, creativity, coding skills, and web deployment.</li> <li><strong>Innovation Ideathon:</strong> A platform to ideate, innovate, and pitch practical solutions to real-world problems.</li> </ul> <p class="mt-10">Both tracks encourage creativity, design thinking, problem‑solving, and innovation, culminating in a combined grand finale before expert judges.</p> </div> </div> </section>
+text
+
+<!-- Event Structure -->
+<section id="event-structure" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-timeline-view"></i> Complete Structure: From Registration to Final Submissions</h2>
+
+    <div class="grid mt-14">
+      <article class="card">
+        <h3 class="small">Day-wise Schedule</h3>
+        <ol class="timeline mt-10">
+          <li>
+            <span class="pill-day">Day 1 • Oct 14 • Online</span>
+            <p class="muted mt-10">
+              <strong>Vibe Coding:</strong> Submit a pre-developed website for evaluation.<br/>
+              <strong>Ideathon:</strong> Submit a PPT of your innovative idea.<br/>
+              Submissions assessed within hours and results updated live. Ensures a baseline of competence.
+            </p>
+          </li>
+          <li>
+            <span class="pill-day">Day 2 • Oct 16 • Online</span>
+            <p class="muted mt-10">
+              <strong>Vibe Coding:</strong> Build to a given theme (e.g., Healthcare, Sustainability, Education) within the time window.<br/>
+              <strong>Ideathon:</strong> Receive a real-world problem statement (core engineering). Submit your PPT within the time window.<br/>
+              Evaluates adaptability, problem‑solving, and creativity under pressure.
+            </p>
+          </li>
+          <li>
+            <span class="pill-day">Day 3 • Oct 17 • On Campus (PPGIT)</span>
+            <p class="muted mt-10">
+              <strong>Vibe Coding:</strong> Finalists solve a surprise problem and deploy a functional website in a few hours.<br/>
+              <strong>Ideathon:</strong> Final presentations before the jury, followed by a structured Q&amp;A.<br/>
+              <strong>Workshop:</strong> Hands‑on vibe coding for all other registered participants.
+            </p>
+            <p class="small mt-10"><strong>Note:</strong> Physical presence on Day 3 is mandatory for workshop access, certificates, and rewards. Scorecard is live; jury decisions are final.</p>
+          </li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Rules -->
+<section id="rules" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-list-check-2"></i> General Rules and Instructions</h2>
+    <div class="grid">
+      <article class="card">
+        <ol class="mt-10">
+          <li>The registration fee is ₹200 per participant, applicable across both tracks.</li>
+          <li>Team size: 2–5 members.</li>
+          <li>Register through the official QR code or registration link.</li>
+          <li>Open to all college students irrespective of discipline or year of study.</li>
+          <li>Strict adherence to submission deadlines is mandatory.</li>
+          <li>All submissions must be original. Plagiarism, duplication, or template-only work without innovation leads to disqualification.</li>
+          <li>Misconduct (offensive/abusive/disruptive behaviour) will not be tolerated.</li>
+          <li>Respect participants, mentors, judges, and organisers at all times.</li>
+          <li>Teams violating rules will be disqualified without appeal.</li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Code of Conduct -->
+<section id="conduct" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-shield-check-line"></i> Code of Conduct</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Online Etiquette (Day 1 & 2)</h3>
+        <ul class="mt-10">
+          <li>Be respectful and cooperative in online interactions.</li>
+          <li>Keep video on during evaluation sessions.</li>
+          <li>Avoid offensive or disruptive communication.</li>
+        </ul>
+        <h3 class="mt-14">On-Campus Conduct (Day 3)</h3>
+        <ul class="mt-10">
+          <li>Be punctual; report at the specified time.</li>
+          <li>Respect organisers, volunteers, peers, and venue rules.</li>
+          <li>Maintain discipline and healthy competition.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Vibe Coding -->
+<section id="vibe" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-code-s-slash-line"></i> Specific Rules — Vibe Coding Track</h2>
+    <div class="grid">
+      <article class="card">
+        <ol class="mt-10">
+          <li>Submissions must reflect self-developed concepts; copied templates are prohibited.</li>
+          <li>Pre-built templates are allowed only with significant custom code. Otherwise, penalties may apply.</li>
+          <li>Follow professional standards:
+            <ul class="mt-10">
+              <li>Clear structure</li>
+              <li>Clean coding practices</li>
+              <li>Proper documentation</li>
+              <li>Responsive UI and good usability</li>
+            </ul>
+          </li>
+          <li>Submit all deliverables (source code, deployment link, docs) within deadlines.</li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Ideathon -->
+<section id="ideathon" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-presentation-line"></i> Specific Rules — Innovation Ideathon Track</h2>
+    <div class="grid">
+      <article class="card">
+        <ol class="mt-10">
+          <li>Use the structured template provided by the organisers.</li>
+          <li>Your abstract must clearly highlight:
+            <ul class="mt-10">
+              <li>Problem Statement</li>
+              <li>Proposed Solution</li>
+              <li>Use Case</li>
+              <li>Potential Impact</li>
+            </ul>
+          </li>
+          <li>Pitch decks must be professional, concise, and within the prescribed format and time.</li>
+          <li>Final presentations are delivered live in the finale, followed by jury Q&amp;A.</li>
+          <li>Mockups, prototypes, flow diagrams, or visual aids are strongly encouraged.</li>
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Rewards -->
+<section id="rewards" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-trophy-line"></i> Rewards & Recognitions</h2>
+    <div class="grid">
+      <article class="card">
+        <ul class="mt-10">
+          <li><strong>Exclusive Workshop:</strong> Access to a hands-on vibe coding workshop on Day 3.</li>
+          <li><strong>Cash Prizes &amp; Trophy:</strong> Winners in each track receive exciting cash prizes and a prestigious trophy.</li>
+          <li><strong>Perks for All:</strong> Lunch, refreshments, and participant kits on Day 3.</li>
+          <li><strong>Certificates:</strong> Issued to all participants physically present on Day 3.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Closing Note -->
+<section id="closing" class="section anchor">
+  <div class="container">
+    <h2 class="title"><i class="ri-bookmark-3-line"></i> Closing Note</h2>
+    <div class="card">
+      <p>Techno KreatiCon 3.0 is not just a competition—it’s a platform to explore, innovate, and showcase your abilities. By participating, you’ll engage in real-world problem‑solving, expand your technical knowledge, and connect with like‑minded peers.</p>
+      <p class="mt-10">We look forward to welcoming you to an event where <strong>innovation meets execution</strong>.</p>
+      <div class="mt-14">
+        <a class="pill primary" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener">
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(59,130,255,.18)"></span>
+          Register now <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main> <footer> <div class="container"> <p>© 2025 Techno KreatiCon 3.0 — Organised by CyberZen, PPGIT</p> </div> </footer> <script> // Simple aria-current toggling for subnav const links = Array.from(document.querySelectorAll('.subnav a[href^="#"]')); const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean); const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ const id = '#'+e.target.id; links.forEach(l => l.setAttribute('aria-current', l.getAttribute('href')===id ? 'true':'false')); } }); }, { rootMargin: '-50% 0px -45% 0px', threshold: 0 }); sections.forEach(s => io.observe(s)); </script></body> </html>

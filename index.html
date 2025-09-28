@@ -4,14 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Techno KreatiCon 3.0 — PPG Institute of Technology, Coimbatore</title>
-  <meta name="description" content="Techno KreatiCon 3.0 by CyberZen @ PPGIT. Rulebook & Guidelines, Agenda, Venue, FAQ, Contact. Enroll now!" />
+  <meta name="description" content="Techno KreatiCon 3.0 by CyberZen @ PPGIT. Rulebook & Guidelines, Agenda, Venue, FAQ, Contact. Register now!" />
   <meta name="theme-color" content="#0b0f2a" />
+
+  <!-- Canonical + Social -->
+  <link rel="canonical" href="https://ppgit.ac.in/technokreaticon-3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Techno KreatiCon 3.0 — PPG Institute of Technology, Coimbatore" />
+  <meta property="og:description" content="Techno KreatiCon 3.0 by CyberZen @ PPGIT. Rulebook, Agenda, Venue, FAQ. Register now!" />
+  <meta property="og:url" content="https://ppgit.ac.in/technokreaticon-3" />
+  <meta property="og:image" content="https://ppgit.ac.in/assets/social/tk-og.jpg" />
+  <meta property="og:image:alt" content="Techno KreatiCon 3.0 banner" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Techno KreatiCon 3.0 — PPGIT" />
+  <meta name="twitter:description" content="Join Vibe Coding + Innovation Ideathon. Prizes, workshop, certificates." />
+  <meta name="twitter:image" content="https://ppgit.ac.in/assets/social/tk-og.jpg" />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+
   <!-- Icons -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Preload hero logo (performance) -->
+  <link rel="preload" as="image" href="assets/team/cyberzen.svg" fetchpriority="high">
+
+  <!-- Favicons -->
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Switch .no-js to .js for progressive enhancement -->
+  <script>document.documentElement.classList.replace('no-js','js');</script>
 
   <style>
     /* ================= Base tokens ================= */
@@ -34,6 +61,15 @@
     /* ================= Global + No horizontal scroll ================= */
     * { box-sizing: border-box; }
     html { scroll-behavior:smooth; }
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
+    }
+    /* Offset for sticky header when jumping to anchors */
+    :where(section, [id]) { scroll-margin-top: 84px; }
+    @media (max-width: 700px){
+      :where(section, [id]) { scroll-margin-top: 64px; }
+    }
+
     html, body{
       width: 100%;
       max-width: 100%;
@@ -52,6 +88,19 @@
       line-height:1.65;
       touch-action: pan-y;            /* only vertical scroll */
       overscroll-behavior-x: none;    /* no side-pan bounce */
+    }
+    body.menu-open{ overflow: hidden; }
+
+    /* Accessible focus and skip link */
+    .skip-link{
+      position: absolute; left:-9999px; top:0;
+      background:#fff; color:#000; padding:10px 14px; border-radius:8px;
+    }
+    .skip-link:focus{ left:12px; top:12px; z-index: 3000; }
+    :where(a, button, summary, .chip, .btn):focus-visible{
+      outline:2px solid var(--brand);
+      outline-offset: 3px;
+      border-radius: 10px;
     }
 
     /* Media should never overflow */
@@ -148,10 +197,6 @@
       overflow-x: clip;
     }
     .center-logo{ display:flex; justify-content:center; margin-bottom: 10px; gap: 12px; flex-wrap: wrap; }
-    .tk-logo{
-      width: clamp(120px, 22vw, 240px); height:auto;
-      filter: drop-shadow(0 12px 36px rgba(59,130,255,.35));
-    }
     .hero h1{
       margin: 10px 0 6px;
       font-family:'Manrope',system-ui; font-weight:800;
@@ -284,13 +329,171 @@
       .section-title { font-size: 22px; }
       .coord-grid, .faculty-grid { max-width: 96vw; }
       .coord-card, .faculty-card { grid-template-columns: 96px 1fr; column-gap: 12px; padding: 12px; }
-      .coord-card .photo, .faculty-card .faculty-photo { width: 96px; height: 96px; }
+      .coord-card .photo, .faculty-card .faculty-card .faculty-photo { width: 96px; height: 96px; }
       .faq { max-width: 96vw; }
     }
+
+    /* ================= Animated background box (optional) ================= */
+    .animated-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow-soft);
+    }
+    .animated-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(45deg, rgba(59,130,255,.1), transparent 40%, transparent);
+      z-index: 1;
+      animation: gradient-animation 6s ease-in-out infinite;
+    }
+    .animated-box > * { position: relative; z-index: 2; }
+    @keyframes gradient-animation {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+    }
+
+    /* ================= Guidelines (final) ================= */
+    :root {
+      --green: #22c55e;
+      --purple: #a78bfa;
+    }
+
+    #guidelines .guidelines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    #guidelines .perks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    #guidelines .guideline-card,
+    #guidelines .perk-card,
+    #guidelines .closing-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+
+    #guidelines .guideline-card { padding: 18px; }
+    #guidelines .perk-card { padding: 16px; }
+    #guidelines .closing-card { padding: 18px; }
+
+    #guidelines .card--blue   { border-color: rgba(59,130,255,.35); }
+    #guidelines .card--green  { border-color: rgba(34,197,94,.35); }
+    #guidelines .card--purple { border-color: rgba(167,139,250,.35); }
+
+    #guidelines .card-title,
+    #guidelines .perk-card h3 {
+      margin: 0 0 10px;
+      font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #guidelines .closing-card .card-title { font-size: 20px; }
+
+    #guidelines .guideline-card p { margin: 6px 0 0; color: var(--muted); }
+    #guidelines .guideline-card ul { margin: 8px 0 0; padding-left: 1.15rem; }
+    #guidelines .guideline-card li { margin: 6px 0; }
+    #guidelines .perk-card p { margin: 0; color: var(--muted); }
+
+    #guidelines .timeline {
+      position: relative;
+      list-style: none;
+      padding-left: 22px;
+      margin: 8px 0 0;
+    }
+    #guidelines .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--line);
+    }
+    #guidelines .timeline li {
+      position: relative;
+      padding: 10px 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    #guidelines .timeline li::before {
+      content: '';
+      position: absolute;
+      left: -2px; top: 16px;
+      width: 10px; height: 10px;
+      background: var(--brand);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(59,130,255,.20);
+    }
+    #guidelines .timeline .pill {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--brand);
+      border: 1px solid rgba(59,130,255,.5);
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    #guidelines .mt-12 { margin-top: 12px; }
+    #guidelines .mt-18 { margin-top: 18px; }
+
+    @media (max-width: 700px) {
+      #guidelines .guidelines-grid { gap: 14px; }
+    }
   </style>
+
+  <!-- Structured Data: Event -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Techno KreatiCon 3.0",
+    "description": "National-level 3-day competition featuring Vibe Coding and Innovation Ideathon.",
+    "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "startDate": "2025-10-14T09:00:00+05:30",
+    "endDate": "2025-10-17T17:00:00+05:30",
+    "location": [
+      { "@type": "VirtualLocation", "url": "https://ppgit-cse.formaloo.co/h248yb" },
+      {
+        "@type": "Place",
+        "name": "PPG Institute of Technology, Coimbatore",
+        "address": "PPG Institute of Technology, Department of CSE, Coimbatore, Tamil Nadu, India",
+        "geo": { "@type": "GeoCoordinates", "latitude": 11.1271, "longitude": 76.9640 }
+      }
+    ],
+    "organizer": { "@type": "Organization", "name": "CyberZen — PPGIT", "url": "https://ppgit.ac.in/" },
+    "offers": {
+      "@type": "Offer",
+      "price": "200",
+      "priceCurrency": "INR",
+      "url": "https://ppgit-cse.formaloo.co/h248yb",
+      "availability": "https://schema.org/InStock"
+    },
+    "image": "https://ppgit.ac.in/assets/social/tk-og.jpg"
+  }
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <!-- Top bar -->
   <header class="topbar">
     <div class="container topbar-wrap">
@@ -298,21 +501,20 @@
         <!-- Logo removed as requested -->
       </div>
 
-      <nav class="nav-chips" id="navChips">
-        <a class="chip" href="#hero"><i class="ri-home-5-line"></i> Home</a>
-        <a class="chip" href="#agenda"><i class="ri-calendar-event-line"></i> Agenda</a>
-        <a class="chip" href="#venue"><i class="ri-map-pin-2-line"></i> Venue</a>
-        <a class="chip" href="#faculty"><i class="ri-team-line"></i> Faculty</a>
-        <a class="chip" href="#guidelines"><i class="ri-book-2-line"></i> Guidelines</a>
-        <a class="chip" href="#faq"><i class="ri-question-answer-line"></i> FAQ</a>
-        <a class="chip" href="contact.html"><i class="ri-contacts-book-2-line"></i> Contact</a>
+      <nav class="nav-chips" id="navChips" aria-label="Primary">
+  <a class="chip" href="#hero" aria-current="page"><i class="ri-home-5-line"></i> Home</a>
+  <a class="chip" href="#agenda"><i class="ri-calendar-event-line"></i> Agenda</a>
+  <a class="chip" href="#venue"><i class="ri-map-pin-2-line"></i> Venue</a>
+  <a class="chip" href="#faculty"><i class="ri-team-line"></i> Faculty</a>
+  <a class="chip" href="#faq"><i class="ri-question-answer-line"></i> FAQ</a>
+  <a class="chip" href="contact.html"><i class="ri-contacts-book-2-line"></i> Contact</a>
       </nav>
 
-      <div style="display:flex; align-items:center; gap:10px;">
+      <div class="topbar-right">
         <a class="enroll-pill" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener" aria-label="Enroll">
-          <span class="dot" aria-hidden="true"></span> Enroll <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+          <span class="dot" aria-hidden="true"></span> Register now <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
         </a>
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navChips">☰</button>
       </div>
     </div>
   </header>
@@ -321,24 +523,26 @@
   <section id="hero" class="hero">
     <div class="container">
       <div class="center-logo reveal">
-  <img src="assets/team/cyberzen.svg" class="tk-logo" alt="Techno KreatiCon logo">
-  <img src="assets/team/logo.svg" class="tk-logo logo-small" alt="Placeholder Logo" style="opacity:0.5;">
+        <img src="assets/team/cyberzen.svg" alt="CYBERZEN Logo" class="tk-logo" fetchpriority="high" decoding="async" />
       </div>
-      <div class="reveal" style="font-size:20px;font-weight:600;color:#aab3cf;margin-bottom:2px;text-align:center;">organises</div>
+      <div class="reveal hero-organises">organises</div>
       <h1 class="reveal">Techno KreatiCon 3.0</h1>
       <div class="cta reveal">
-        <a class="btn btn-primary" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><i class="ri-rocket-2-line"></i> Enroll Now</a>
+        <a class="btn btn-primary btn-animated" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><i class="ri-rocket-2-line"></i> Register now</a>
       </div>
+        <div class="hero-logo-row">
+          
+        </div>
     </div>
   </section>
 
-  <main>
+  <main id="main">
     <section id="why" class="section">
       <div class="container">
-        <h2 class="section-title reveal"><i class="ri-sparkling-line"></i> Why You Absolutely Should Attend Techno KreatiCon 3.0</h2>
-        <div class="card reveal" style="max-width: 980px;">
+        <h2 class="section-title reveal"><i class="ri-sparkling-line"></i> Absolutely Why You Should Attend Techno KreatiCon 3.0</h2>
+        <div class="card reveal card-wide">
           <p>Techno KreatiCon Phase 1 &amp; 2, held at PPG Institute of Technology, Coimbatore, was a vibrant platform where young innovators pitched groundbreaking ideas addressing real‑world challenges. Projects were judged by industry experts on innovation, feasibility, and market potential, with live updates ensuring transparency. The event inspired students to push technological boundaries.</p>
-          <p>CyberZen, a student‑driven community at PPGIT, fosters innovation, technical expertise, and cybersecurity awareness. By organizing events like Techno KreatiCon, along with workshops, hackathons, and competitions in coding, AI, and ethical hacking, the club bridges academia and industry, empowering students to thrive in the digital era.</p>
+          <p>CyberZen, a student‑driven community at PPGIT, fosters innovation, technical expertise, and cybersecurity awareness. By organising events like Techno KreatiCon, along with workshops, hackathons, and competitions in coding, AI, and ethical hacking, the club bridges academia and industry, empowering students to thrive in the digital era.</p>
         </div>
       </div>
     </section>
@@ -348,8 +552,8 @@
       <div class="container">
         <h2 class="section-title reveal"><i class="ri-information-fill"></i> About the Event</h2>
         <div class="about-grid">
-          <div class="card reveal" style="grid-column: span 3; max-width: 900px;">
-            Techno Kreaticon 3.0 is a three-day national-level competition organized by the Department of Computer Science and Engineering at PPG Institute of Technology.
+          <div class="card reveal card-wide card-span-3">
+            Techno KreatiCon 3.0 is a three-day national-level competition organised by the Department of Computer Science and Engineering at PPG Institute of Technology.
             This flagship event integrates two parallel tracks: <strong>Vibe Coding</strong> (technical knowledge, creativity, coding, and web deployment) and the <strong>Innovation Ideathon</strong> (ideate, innovate, and pitch practical solutions to real-world problems). Both tracks foster creativity, design thinking, problem-solving, and innovation, culminating in a grand finale before expert judges.
           </div>
         </div>
@@ -359,9 +563,9 @@
     <!-- Promo Video -->
     <section id="promo" class="section">
       <div class="container">
-        <h2 class="section-title reveal"><i class="ri-play-circle-line"></i> Phase 1 & 2</h2>
-        <div class="video-wrap reveal" style="max-width:900px;margin-inline:auto;">
-          <video controls playsinline poster="assets/video/tk-poster.jpg">
+        <h2 class="section-title reveal"><i class="ri-play-circle-line"></i> Phase 1 &amp; 2</h2>
+        <div class="video-wrap reveal video-wide">
+          <video controls playsinline preload="metadata" poster="assets/video/tk-poster.jpg">
             <source src="assets/team/phase1.mp4" type="video/mp4">
             Your browser doesn’t support HTML5 video.
           </video>
@@ -377,7 +581,7 @@
         <div class="coord-grid faculty-grid">
           <article class="coord-card reveal faculty-card">
             <div class="photo faculty-photo">
-              <img src="assets/team/nandhakumar.svg" alt="Dr. S. Nandhakumar — Principal of PPGIT" loading="lazy" class="faculty-img" />
+              <img src="assets/team/nandhakumar.svg" alt="Dr. S. Nandhakumar — Principal of PPGIT" loading="lazy" decoding="async" class="faculty-img" width="108" height="108" />
             </div>
             <div>
               <div class="names faculty-name">Dr. S. Nandhakumar</div>
@@ -387,7 +591,7 @@
 
           <article class="coord-card reveal faculty-card">
             <div class="photo faculty-photo">
-              <img src="assets/team/myilvahanan.svg" alt="Dr. J. Karthick Myilvahanan — Head of Department — CSE" loading="lazy" class="faculty-img" />
+              <img src="assets/team/myilvahanan.svg" alt="Dr. J. Karthick Myilvahanan — Head of Department — CSE" loading="lazy" decoding="async" class="faculty-img" width="108" height="108" />
             </div>
             <div>
               <div class="names faculty-name">Dr. J. Karthick Myilvahanan</div>
@@ -397,7 +601,7 @@
 
           <article class="coord-card reveal faculty-card">
             <div class="photo faculty-photo">
-              <img src="assets/team/jenefa.svg" alt="Prof. A. Jenefa — Assistant Professor — CSE" loading="lazy" class="faculty-img" />
+              <img src="assets/team/jenefa.svg" alt="Prof. A. Jenefa — Assistant Professor — CSE" loading="lazy" decoding="async" class="faculty-img" width="108" height="108" />
             </div>
             <div>
               <div class="names faculty-name">Prof. A. Jenefa</div>
@@ -407,7 +611,7 @@
 
           <article class="coord-card reveal faculty-card">
             <div class="photo faculty-photo">
-              <img src="assets/team/jayanthi.svg" alt="Prof. P. Jayanthi — Assistant Professor — CSE" loading="lazy" class="faculty-img" />
+              <img src="assets/team/jayanthi.svg" alt="Prof. P. Jayanthi — Assistant Professor — CSE" loading="lazy" decoding="async" class="faculty-img" width="108" height="108" />
             </div>
             <div>
               <div class="names faculty-name">Prof. P. Jayanthi</div>
@@ -450,7 +654,7 @@
 
         <article class="agenda-card reveal">
           <div class="stage">
-            <span class="badge blue">Sumup</span>
+            <span class="badge blue">Finale</span>
             <span class="badge">Day 3 (Offline @ PPGIT) — 17 Oct</span>
           </div>
           <ul>
@@ -473,85 +677,124 @@
         <div class="boxed card reveal">
           PPG Institute of Technology (PPGIT), Coimbatore<br/>
           Department of Computer Science and Engineering
-          <div style="margin-top:10px;">
+          <div class="venue-mt">
             <a class="btn" href="https://maps.app.goo.gl/7zuuKZY8QiaoNT9a8?g_st=aw" target="_blank" rel="noopener"><i class="ri-map-2-line"></i> Open in Maps</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Rulebook & Guidelines -->
+    <!-- Rulebook & Guidelines (final, single section) -->
     <section id="guidelines" class="section">
       <div class="container">
         <h2 class="section-title reveal"><i class="ri-book-2-line"></i> Rulebook &amp; Guidelines</h2>
 
-        <div class="grid reveal" style="margin-top:18px;">
-          <div class="boxed" style="border-left:6px solid #3b82ff;">
-            <h3 style="color:#3b82ff;"><i class="ri-timeline-view"></i> Step 1: Event Structure</h3>
-            <ul>
-              <li><b>Day 1 (Online):</b> Submit website (Vibe Coding) or PPT (Ideathon). Results updated live.</li>
-              <li><b>Day 2 (Online):</b> Theme/problem announced. Build and submit within time.</li>
-              <li><b>Day 3 (On Campus):</b> Final challenge, live presentations, hands-on workshop. Physical presence required for certificates and rewards.</li>
-              <li><b>Judging:</b> Real-time scorecard. Jury decisions are final.</li>
-            </ul>
-          </div>
-          <div class="boxed" style="border-left:6px solid #10b981;">
-            <h3 style="color:#10b981;"><i class="ri-list-check-2"></i> Step 2: General Rules</h3>
+        <!-- Row 1 -->
+        <div class="guidelines-grid reveal">
+          <!-- Event Structure (timeline) -->
+          <article class="guideline-card card--blue">
+            <h3 class="card-title"><i class="ri-timeline-view"></i> Event Structure</h3>
+            <ol class="timeline">
+              <li>
+                <span class="pill">Day 1 • Online</span>
+                Submit your website (Vibe Coding) or PPT (Ideathon) for evaluation. Results updated live.
+              </li>
+              <li>
+                <span class="pill">Day 2 • Online</span>
+                Theme/problem announced. Build and submit within the given time.
+              </li>
+              <li>
+                <span class="pill">Day 3 • On Campus</span>
+                Final challenge, live presentations, and a hands‑on workshop. Physical presence required for certificates and rewards.
+              </li>
+              <li>
+                <span class="pill">Judging</span>
+                Real‑time scorecard. Jury decisions are final and binding.
+              </li>
+            </ol>
+          </article>
+
+          <!-- General Rules -->
+          <article class="guideline-card card--green">
+            <h3 class="card-title"><i class="ri-list-check-2"></i> General Rules</h3>
             <ul>
               <li>Registration fee: ₹200 per participant.</li>
               <li>Team size: 2–5 members.</li>
-              <li>Register via QR code or link.</li>
-              <li>Open to all college students.</li>
-              <li>Original work only; plagiarism leads to disqualification.</li>
-              <li>Respect deadlines and event etiquette.</li>
-              <li>Misconduct or rule violations = disqualification.</li>
+              <li>Register via QR code or official link.</li>
+              <li>Open to all college students (UG/PG).</li>
+              <li>All work must be original. Plagiarism or copying leads to disqualification.</li>
+              <li>Respect deadlines, event etiquette, and instructions from organizers.</li>
+              <li>Misconduct, rule violations, or disruptive behavior will result in disqualification.</li>
             </ul>
-          </div>
-          <div class="boxed" style="border-left:6px solid #8b5cf6;">
-            <h3 style="color:#8b5cf6;"><i class="ri-shield-check-line"></i> Step 3: Code of Conduct</h3>
+          </article>
+
+          <!-- Code of Conduct -->
+          <article class="guideline-card card--purple">
+            <h3 class="card-title"><i class="ri-shield-check-line"></i> Code of Conduct</h3>
             <ul>
-              <li><b>Online:</b> Be respectful, keep video on, no disruptive communication.</li>
-              <li><b>On Campus:</b> Be punctual, respect all, maintain discipline and healthy competition.</li>
+              <li><b>Online:</b> Be respectful, keep your video on, and avoid disruptive communication.</li>
+              <li><b>On Campus:</b> Be punctual, respect everyone, maintain discipline, and encourage healthy competition.</li>
+              <li>Any form of harassment or discrimination will not be tolerated.</li>
             </ul>
+          </article>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="guidelines-grid reveal mt-18">
+          <!-- Vibe Coding Track -->
+          <article class="guideline-card card--blue">
+            <h3 class="card-title"><i class="ri-code-s-slash-line"></i> Vibe Coding Track</h3>
+            <ul>
+              <li>Submit only self‑developed concepts; copied templates are strictly prohibited.</li>
+              <li>Pre‑built templates allowed only with significant custom code and documentation.</li>
+              <li>Follow best practices: clear structure, clean code, documentation, and responsive UI.</li>
+              <li>Submit source code, deployment link, and documentation before the deadline.</li>
+              <li>Judging criteria: Innovation, technical quality, usability, and presentation.</li>
+            </ul>
+          </article>
+
+          <!-- Ideathon Track -->
+          <article class="guideline-card card--purple">
+            <h3 class="card-title"><i class="ri-presentation-line"></i> Innovation Ideathon Track</h3>
+            <ul>
+              <li>Use the official presentation template provided by organizers.</li>
+              <li>Abstract must clearly state: Problem, Solution, Use Case, and Impact.</li>
+              <li>Deck should be professional, concise, and within the allocated time.</li>
+              <li>Final live presentation with jury Q&amp;A. Be prepared for questions.</li>
+              <li>Mockups, prototypes, and process flows are highly encouraged.</li>
+              <li>Judging criteria: Clarity, innovation, feasibility, and impact.</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Row 3: Perks -->
+        <div class="perks-grid reveal mt-18">
+          <div class="perk-card">
+            <h3><i class="ri-terminal-window-line"></i> Exclusive Workshop</h3>
+            <p>Hands‑on vibe coding workshop for all registered participants on Day 3.</p>
+          </div>
+          <div class="perk-card">
+            <h3><i class="ri-trophy-line"></i> Cash Prizes &amp; Trophy</h3>
+            <p>Exciting cash prizes and a prestigious trophy for winners in both tracks.</p>
+          </div>
+          <div class="perk-card">
+            <h3><i class="ri-restaurant-line"></i> Perks for All</h3>
+            <p>Lunch, refreshments, and participant kits for everyone present on Day 3.</p>
+          </div>
+          <div class="perk-card">
+            <h3><i class="ri-file-paper-line"></i> Certificates</h3>
+            <p>Certificates for all participants present on Day 3.</p>
           </div>
         </div>
 
-        <div class="grid reveal" style="margin-top:18px;">
-          <div class="boxed" style="border-left:6px solid #3b82ff;">
-            <h3 style="color:#3b82ff;"><i class="ri-code-s-slash-line"></i> Vibe Coding Track</h3>
-            <ul>
-              <li>Self-developed concepts only; copied templates prohibited.</li>
-              <li>Pre-built templates allowed only with heavy custom code.</li>
-              <li>Follow standards: clear structure, clean code, docs, responsive UI.</li>
-              <li>Submit source, deployment link, docs within deadlines.</li>
-            </ul>
+        <!-- Closing note -->
+        <article class="guideline-card closing-card reveal mt-18">
+          <h3 class="card-title"><i class="ri-bookmark-3-line"></i> Closing Note</h3>
+          <p>Techno KreatiCon 3.0 is your platform to explore, innovate, and showcase your abilities. Engage in real‑world problem‑solving, expand your technical knowledge, and network with like‑minded peers. We look forward to welcoming you—where innovation meets execution!</p>
+          <div class="mt-12">
+            <a class="enroll-pill" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span> Register now <i class="ri-arrow-right-up-line" aria-hidden="true"></i></a>
           </div>
-          <div class="boxed" style="border-left:6px solid #8b5cf6;">
-            <h3 style="color:#8b5cf6;"><i class="ri-presentation-line"></i> Innovation Ideathon Track</h3>
-            <ul>
-              <li>Follow the official presentation template.</li>
-              <li>Abstract must state: Problem, Solution, Use Case, Impact.</li>
-              <li>Professional, concise deck; within allocated time.</li>
-              <li>Final live presentation with jury Q&amp;A.</li>
-              <li>Mockups/prototypes/flows encouraged.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="grid reveal" style="margin-top:18px;">
-          <div class="boxed"><h3><i class="ri-terminal-window-line"></i> Exclusive Workshop</h3><p class="muted">Hands-on vibe coding workshop for all registered participants.</p></div>
-          <div class="boxed"><h3><i class="ri-trophy-line"></i> Cash Prizes &amp; Trophy</h3><p class="muted">Exciting cash prizes and a prestigious trophy for winners.</p></div>
-          <div class="boxed"><h3><i class="ri-restaurant-line"></i> Perks for All</h3><p class="muted">Lunch, refreshments, and participant kits on Day 3.</p></div>
-          <div class="boxed"><h3><i class="ri-file-paper-line"></i> Certificates</h3><p class="muted">Certificates for everyone present on Day 3.</p></div>
-        </div>
-
-        <div class="boxed reveal" style="margin-top:18px;">
-          <h3 style="color:#3b82ff;"><i class="ri-bookmark-3-line"></i> Closing Note</h3>
-          <p>Techno Kreaticon 3.0 is a platform to explore, innovate, and showcase abilities. Engage in real-world problem-solving, expand technical knowledge, and network with like-minded peers. We look forward to welcoming you where innovation meets execution.</p>
-          <div style="margin-top:10px;">
-            <a class="enroll-pill" href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><span class="dot"></span> Enroll <i class="ri-arrow-right-up-line"></i></a>
-          </div>
-        </div>
+        </article>
       </div>
     </section>
 
@@ -563,7 +806,7 @@
           <details class="faq-item" open>
             <summary><i class="ri-user-add-line"></i> How do I register for the hackathon?</summary>
             <div class="answer">
-              Click <a href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><strong>Enroll</strong></a> and complete the form with your team details. You’ll get a confirmation email.
+              Click <a href="https://ppgit-cse.formaloo.co/h248yb" target="_blank" rel="noopener"><strong>Register now</strong></a> and complete the form with your team details. You’ll get a confirmation email.
             </div>
           </details>
           <details class="faq-item">
@@ -591,22 +834,33 @@
 
   <footer>
     <div class="container footer-flex">
-      <p>© 2025 Techno KreatiCon 3.0 — Organized by CyberZen, PPGIT</p>
+      <p>© 2025 Techno KreatiCon 3.0 — Organised by CyberZen, PPGIT</p>
       <p class="footer-credit">designed by NITHEESH. S</p>
     </div>
   </footer>
 
   <script>
-    // ================= Mobile menu =================
+    // ================= Mobile menu with a11y and scroll lock =================
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('navChips');
+    let lastFocus;
 
     function toggleNav(force){
       if(!nav || !hamburger) return;
       const visible = getComputedStyle(nav).display !== 'none';
       const shouldOpen = force === 'open' ? true : force === 'close' ? false : !visible;
+
       nav.style.display = shouldOpen ? 'flex' : 'none';
       hamburger.setAttribute('aria-expanded', String(shouldOpen));
+      document.body.classList.toggle('menu-open', shouldOpen);
+
+      if(shouldOpen){
+        lastFocus = document.activeElement;
+        const firstLink = nav.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
+        firstLink?.focus();
+      }else{
+        lastFocus?.focus();
+      }
     }
 
     hamburger?.addEventListener('click', () => toggleNav());
@@ -633,6 +887,7 @@
     window.addEventListener('resize', () => {
       if (window.innerWidth > 900 && nav) {
         nav.style.display = '';
+        document.body.classList.remove('menu-open');
         hamburger?.setAttribute('aria-expanded', 'false');
       }
     });
@@ -640,7 +895,7 @@
     // ================= Reveal on scroll =================
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) {
-      document.querySelectorAll('.reveal, .card, .agenda-card, .boxed, .faq')
+      document.querySelectorAll('.reveal, .card, .agenda-card, .guideline-card, .boxed, .faq')
         .forEach(el => el.classList.add('in-view'));
     } else {
       const io = new IntersectionObserver((entries, obs)=>{
@@ -651,8 +906,24 @@
           }
         });
       }, {threshold:.12});
-      document.querySelectorAll('.reveal, .card, .agenda-card, .boxed, .faq').forEach(el=>io.observe(el));
+      document.querySelectorAll('.reveal, .card, .agenda-card, .guideline-card, .boxed, .faq')
+        .forEach(el=>io.observe(el));
     }
+
+    // ================= Dynamic aria-current for nav chips =================
+    const navLinks = Array.from(document.querySelectorAll('#navChips a[href^="#"]'));
+    function updateAriaCurrent(){
+      const targetHash = location.hash || '#hero';
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === targetHash) {
+          link.setAttribute('aria-current','page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+    window.addEventListener('hashchange', updateAriaCurrent);
+    window.addEventListener('load', updateAriaCurrent);
   </script>
 </body>
 </html>
